@@ -1,10 +1,8 @@
 import request from 'supertest';
-import { expect } from 'chai';
-import sinon from 'sinon';
-import app from './server.js';
-import dbClient from './db';
+import app from '../server';
+import dbClient from '../utils/db';
 
-describe('gET /status', () => {
+describe('GET /status', () => {
   it('should return status 200 and a message', async () => {
     const response = await request(app).get('/status');
 
@@ -13,7 +11,7 @@ describe('gET /status', () => {
   });
 });
 
-describe('gET /stats', () => {
+describe('GET /stats', () => {
   let nbUsersStub;
   let nbFilesStub;
 
