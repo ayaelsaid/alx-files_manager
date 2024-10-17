@@ -1,5 +1,6 @@
 import crypto from 'crypto';
-import dbClient from '../utils/db.js';
+import dbClient from '../utils/db';
+/* eslint-disable class-methods-use-this */
 
 class UsersController {
   static async postNew(req, res) {
