@@ -8,7 +8,7 @@ const server = http.createServer(app); // Create server instance for testing
 
 describe('GET /status', () => {
   it('should return status 200 and a message', (done) => {
-    http.get('http://localhost:1024/status', (res) => {
+    http.get('http://localhost:5000/status', (res) => {
       let data = '';
 
       res.on('data', (chunk) => {
@@ -18,7 +18,7 @@ describe('GET /status', () => {
       res.on('end', () => {
         expect(res.statusCode).to.equal(200);
         expect(JSON.parse(data)).to.deep.equal({ redis: true, db: true });
-        done(); // Indicate that the test is complete
+        done();
       });
     });
   });
@@ -42,7 +42,7 @@ describe('GET /stats', () => {
     nbUsersStub.returns(Promise.resolve(12));
     nbFilesStub.returns(Promise.resolve(1231));
 
-    http.get('http://localhost:1024/stats', (res) => { // Update the port if needed
+    http.get('http://localhost:5000/stats', (res) => { // Update the port if needed
       let data = '';
 
       res.on('data', (chunk) => {
