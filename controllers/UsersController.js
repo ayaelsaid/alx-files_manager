@@ -1,7 +1,7 @@
 import crypto from 'crypto';
+import Bull from 'bull';
 import dbClient from '../utils/db';
 import redisClient from '../utils/redis';
-import Bull from 'bull';
 
 /* eslint-disable class-methods-use-this */
 const userQueue = new Bull();
