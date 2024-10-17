@@ -1,19 +1,30 @@
-import request from 'supertest';
+import { expect } from 'chai';
+import sinon from 'sinon';
+import http from 'http';
 import app from '../server';
 import dbClient from '../utils/db';
-import sinon from 'sinon';
 
-describe('get /status', () => {
-  it('should return status 200 and a message', async () => {
-    expect.assertions(2);
-    const response = await request(app).get('/status');
+const server = http.createServer(app); // Create server instance for testing
 
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual({ redis: true, db: true });
+describe('GET /status', () => {
+  it('should return status 200 and a message', (done) => {
+    http.get('http://localhost:1024/status', (res) => {
+      let data = '';
+
+      res.on('data', (chunk) => {
+        data += chunk;
+      });
+
+      res.on('end', () => {
+        expect(res.statusCode).to.equal(200);
+        expect(JSON.parse(data)).to.deep.equal({ redis: true, db: true });
+        done(); // Indicate that the test is complete
+      });
+    });
   });
 });
 
-describe('get /stats', () => {
+describe('GET /stats', () => {
   let nbUsersStub;
   let nbFilesStub;
 
@@ -27,14 +38,22 @@ describe('get /stats', () => {
     nbFilesStub.restore();
   });
 
-  it('should return status 200 and user and file counts', async () => {
-    expect.assertions(2);
+  it('should return status 200 and user and file counts', (done) => {
     nbUsersStub.returns(Promise.resolve(12));
     nbFilesStub.returns(Promise.resolve(1231));
 
-    const response = await request(app).get('/stats');
+    http.get('http://localhost:1024/stats', (res) => { // Update the port if needed
+      let data = '';
 
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual({ users: 12, files: 1231 });
+      res.on('data', (chunk) => {
+        data += chunk;
+      });
+
+      res.on('end', () => {
+        expect(res.statusCode).to.equal(200);
+        expect(JSON.parse(data)).to.deep.equal({ users: 12, files: 1231 });
+        done(); // Indicate that the test is complete
+      });
+    });
   });
 });
