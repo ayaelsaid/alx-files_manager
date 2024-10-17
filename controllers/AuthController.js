@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import bcrypt from 'bcrypt';
+import crypto from 'crypto';
 import dbClient from '../utils/db';
 import redisClient from '../utils/redis';
 /* eslint-disable class-methods-use-this */
@@ -19,8 +19,8 @@ class AuthController {
       return res.status(401).json({ error: 'Unauthorized' });
     }
 
-    const passMatched = bcrypt.compareSync(password, user.password);
-    if (!passMatched) {
+    const hashedPassword = crypto.createHash('sha256').update(password).digest('hex');
+    if (hashedPassword !== user.password) {
       return res.status(401).json({ error: 'Unauthorized' });
     }
 
