@@ -1,7 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcrypt';
-import dbClient from '../utils/db.js';
-import redisClient from '../utils/redis.js';
+import dbClient from '../utils/db';
+import redisClient from '../utils/redis';
+/* eslint-disable class-methods-use-this */
 
 class AuthController {
   static async getConnect(req, res) {
