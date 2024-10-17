@@ -6,7 +6,7 @@ import dbClient from '../utils/db';
 
 const server = http.createServer(app); // Create server instance for testing
 
-describe('GET /status', () => {
+describe('get /status', () => {
   it('should return status 200 and a message', (done) => {
     http.get('http://localhost:5000/status', (res) => {
       let data = '';
@@ -24,7 +24,7 @@ describe('GET /status', () => {
   });
 });
 
-describe('GET /stats', () => {
+describe('get /stats', () => {
   let nbUsersStub;
   let nbFilesStub;
 
