@@ -1,6 +1,10 @@
 import crypto from 'crypto';
 import dbClient from '../utils/db';
+import redisClient from '../utils/redis';
+import Bull from 'bull';
+
 /* eslint-disable class-methods-use-this */
+const userQueue = new Bull();
 
 class UsersController {
   static async postNew(req, res) {
