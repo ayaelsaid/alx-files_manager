@@ -1,4 +1,5 @@
 import { createClient } from 'redis';
+/* eslint-disable class-methods-use-this */
 
 class RedisClient {
   constructor() {
