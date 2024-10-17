@@ -13,7 +13,6 @@ class RedisClient {
     });
   }
 
- 
   isAlive() {
     return this.client.isReady;
   }
