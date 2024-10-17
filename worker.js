@@ -1,8 +1,10 @@
 import thumbnail from 'image-thumbnail';
 import fs from 'fs';
+import Bull from 'bull';
 import { ObjectId } from 'mongodb';
-import dbClient from './db';
-import fileQueue from './queues/fileQueue';
+import dbClient from './utils/db';
+
+const fileQueue = new Bull();
 
 fileQueue.process(async (job) => {
   const { userId, fileId } = job.data;
